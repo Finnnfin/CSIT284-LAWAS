@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/screens/quiz_screen.dart';
+
 var logo = 'assets/logo.png';
 void main() {
   runApp(

@@ -24,7 +24,8 @@ class AnswerCard extends StatelessWidget {
     padding: const EdgeInsets.symmetric(
       vertical: 10.0,
     ),
-    child: Container(
+    child: selectedAnswerIndex != null
+    ? Container(
         height: 70,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -49,9 +50,58 @@ class AnswerCard extends StatelessWidget {
                 ),
               )
             ),
+            const SizedBox(height: 10),
+            isCorrectAnswer
+                ? buildCorrectIcon()
+                : isWrongAnswer
+                    ?buildWrongIcon()
+                    :const SizedBox.shrink(),
           ],
         ),
-    ), 
+    ),
+     : Container(
+        height: 70,
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 72, 0, 145)
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.white24,
+          )
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                question,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              )
+            ),
+          ],
+        ),
+     ),
   );
 }
 }
+
+Widget buildCorrectIcon() => const CircleAvatar(
+  radius: 15,
+  backgroundColor: Colors.green,
+  child: Icon(
+    Icons.check,
+    size: 16,
+    color: Colors.white,
+  ),
+);
+
+Widget buildWrongIcon() => const CircleAvatar(
+  radius: 15,
+  backgroundColor: Colors.red,
+  child: Icon(
+    Icons.close,
+    size: 16,
+    color: Colors.white,
+  ),
+);
