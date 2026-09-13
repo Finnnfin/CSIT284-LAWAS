@@ -39,6 +39,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final question = questions[questionIndex];
     bool isLastQuestion = questionIndex == questions.length - 1;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 28, 20, 40),
       appBar: AppBar(
         title: const Text('Quiz App'),
       ),
@@ -78,7 +79,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                       ),
                     );
-                  },
+                  }: null,
                   label: 'Finish',
                 )
                 : RectangularButton(

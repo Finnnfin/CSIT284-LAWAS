@@ -14,10 +14,11 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      backgroundColor: Color.fromARGB(255, 28, 20, 40),
+      body: Center(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const SizedBox(width: 1000),
           const Text(
             'Your Score: ',
             style: TextStyle(
@@ -55,6 +56,7 @@ class ResultScreen extends StatelessWidget {
               ),
             ],
           ),
+      ),
       );
   }
 
