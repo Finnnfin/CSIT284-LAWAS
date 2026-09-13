@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/models/questions.dart';
-import '/screens/quiz_screen.dart';
+
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({
@@ -19,7 +19,7 @@ class ResultScreen extends StatelessWidget {
         children: [
           const SizedBox(width: 1000),
           const Text(
-            'You answered $score out of ${questions.length} questions correctly!',
+            'Your Score: ',
             style: TextStyle(
               fontSize: 34,
               fontWeight: FontWeight.bold,
@@ -48,16 +48,14 @@ class ResultScreen extends StatelessWidget {
                    Text(
                     '${(score / questions.length * 100).round()}%',
                     style: const TextStyle(fontSize: 25),
-                    )
+                    ),
                   ],
                    ),
                 ],
               ),
             ],
           ),
-        ],
-      ),
-    );
+      );
   }
 
 

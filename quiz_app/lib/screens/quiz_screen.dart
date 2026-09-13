@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '/models/questions.dart';
 import '/screens/result_screen.dart';
 import '/widgets/answer_card.dart';
-
+import '/widgets/next_button.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -45,7 +45,7 @@ class _QuizScreenState extends State<QuizScreen> {
       body: Padding(
         padding:const EdgeInsets.all(24.0),
         child: Column(
-          mainaxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               question.question,
@@ -61,8 +61,8 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: AnswerCard(
                     currentIndex: index,
                     question: question.options[index],
-                    isSelected: false,
-                    selectedAnswerIndex: 0,
+                    isSelected: selectedAnswerIndex == index,
+                    selectedAnswerIndex: selectedAnswerIndex,
                     correctAnswerIndex: question.correctAnswerIndex,
                   ),
                 );
@@ -70,9 +70,9 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
             isLastQuestion
                 ? RectangularButton(
-                  onPressed: () {
+                  onPressed: selectedAnswerIndex != null ? () {
                     Navigator.of(context).pushReplacement(
-                      MAterialPageRoute(
+                      MaterialPageRoute(
                         builder: (_) => ResultScreen(
                           score: score,
                         ),
