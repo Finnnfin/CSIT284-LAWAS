@@ -45,7 +45,7 @@ class ExpenseSummary extends StatelessWidget {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    '\₱${total.toStringAsFixed(2)}',
+                    '₱${total.toStringAsFixed(2)}',
                     style: Theme.of(context)
                     .textTheme
                     .headlineSmall
