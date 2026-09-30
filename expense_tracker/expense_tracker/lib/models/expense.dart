@@ -40,7 +40,7 @@ IconData get icon {
     }
   }
 
-  String get CategoryName {
+  String get categoryName {
     switch (category) {
       case Category.food:
         return 'Food';
