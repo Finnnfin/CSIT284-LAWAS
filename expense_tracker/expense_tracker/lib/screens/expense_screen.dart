@@ -1,7 +1,8 @@
+import 'package:expense_tracker/widgets/expense_list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expense_tracker/models/expense.dart';
-import 'package:expense_tracker/widgets/expense_card.dart';
+import 'package:expense_tracker/widgets/responsive_layout.dart';
 import 'package:expense_tracker/widgets/expense_form.dart';
 import 'package:expense_tracker/widgets/expense_summary.dart';
 
@@ -86,6 +87,117 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
  );
 }
 
+Widget buildSectionTitle() {
+  return Row(
+    children: [
+      Text(
+        'Recent Expenses',
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      const Spacer(),
+      Text(
+        '${expenses.length} items',
+        style: Theme.of(context).textTheme.bodySmall,
+        ),
+    ],
+  );
+}
+
+Widget buildMobileLayout() {
+  return Padding(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      children: [
+        ExpenseSummary(
+          total: total,
+          count: expenses.length,
+          ),
+        const SizedBox(height: 16),
+        buildSectionTitle(),
+        const SizedBox(height: 8),
+        Expanded(
+          child: ExpenseList(
+            expenses: expenses, 
+            onDelete: deleteExpense,
+          )
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildTabletLayout() {
+  return Center(
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 1000),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 320,
+              child: ExpenseSummary(
+                total: total,
+                count: expenses.length,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                children: [
+                  buildSectionTitle(),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ExpenseList(
+                      expenses: expenses,
+                      onDelete: deleteExpense,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget buildLandscapeLayout() {
+  return Padding(
+    padding: const EdgeInsets.all(16),
+    child: Row(
+      children: [
+        Expanded(
+          child: ExpenseSummary(
+            total: total,
+            count: expenses.length,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            children: [
+              buildSectionTitle(),
+              const SizedBox(height: 8),
+              Expanded(
+                child: ExpenseList(
+                  expenses: expenses,
+                  onDelete: deleteExpense,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    )
+  );
+}
+
+
 @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -109,104 +221,10 @@ Widget build(BuildContext context) {
       ],
     ),
     body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ExpenseSummary(
-              total: total,
-              count: expenses.length,
-            ),
-
-            const SizedBox(height: 20),
-            
-            Row(
-              children: [
-                Text(
-                  'Recent Expenses',
-                  style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '${expenses.length} items',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-            ],
-            ),
-            const SizedBox(height: 12),
-
-            Expanded(
-              child: expenses.isEmpty
-              ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.receipt_long_outlined,
-                    size: 70,
-                    color: Theme.of(context)
-                    .colorScheme
-                    .primary,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No expenses yet',
-                    style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  const Text(
-                    'Tap the + button to add your first expense.',
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-               ),
-              )
-              : ListView.builder(
-                itemCount: expenses.length,
-                itemBuilder: (context, index) {
-                  final expense = expenses[index];
-
-                  return Dismissible(
-                    key: ValueKey(expense),
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.only(right: 20),
-                      margin: const EdgeInsets.only(bottom: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                      ),
-                    ),
-                    onDismissed: (_) {
-                      deleteExpense(expense);
-                    },
-                    child: ExpenseCard(
-                      expense: expense,
-                      onDelete: (){
-                        deleteExpense(expense);
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+      child: ResponsiveLayout(
+        mobile: buildMobileLayout(),
+        tablet: buildTabletLayout(),
+        landscape: buildLandscapeLayout(),
       ),
     ),
     floatingActionButton: FloatingActionButton.extended(
