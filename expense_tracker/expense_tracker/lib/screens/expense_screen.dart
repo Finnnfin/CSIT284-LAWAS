@@ -23,18 +23,6 @@ class ExpenseScreen extends StatefulWidget {
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
   final List<Expense> expenses = [
-    Expense(
-      title: 'Lunch',
-      amount: 150,
-      date: DateTime.now(),
-      category: Category.food,
-    ),
-    Expense(
-      title: 'Bus Faire',
-      amount: 50,
-      date: DateTime.now(),
-      category: Category.transport,
-    ),
   ];
 
   double get total {
