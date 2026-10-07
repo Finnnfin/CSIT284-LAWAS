@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_internals/demo_buttons.dart';
 
 class UIUpdatesDemo extends StatelessWidget {
-  const UIUpdatesDemo({super.key});
+  const UIUpdatesDemo({
+    super.key
+  });
 
 
 
